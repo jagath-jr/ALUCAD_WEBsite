@@ -19,6 +19,7 @@ body{
 .hero p {
   font-size: 1rem;
   margin-top: 10px;
+  
 }
 
 /* Description */
@@ -29,6 +30,12 @@ body{
   text-align: center;
   font-size: 1rem;
 }
+.description p {
+  line-height: 1.6;
+  color: #333;
+   text-align: justify;
+}
+
 
 /* Gallery Grid */
 .gallery-section {
