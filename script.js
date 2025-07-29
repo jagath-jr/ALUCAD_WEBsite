@@ -40,7 +40,7 @@ const getGalleryImages = async ()=>{
             innerHTML = innerHTML + `
                 <div class="gallery-item" data-aos="fade-up">
                     <label for="img-modal-${i}">
-                        <img src=${'http://188.241.62.49:18080/api/compose' + a.url} alt="Gallery Image" />
+                        <img src=${'https://corteza.duvitra.com/api/compose' + a.url} alt="Gallery Image" />
                         <div class="caption"></div>
                     </label>
                 </div>
@@ -49,7 +49,7 @@ const getGalleryImages = async ()=>{
                     <label for="img-modal-${i}" class="overlay"></label>
                     <div class="modal-content-box">
                         <label for="img-modal-${i}" class="close-btn">&times;</label>
-                        <img src=${'http://188.241.62.49:18080/api/compose' + a.url} alt="Popup Image" />
+                        <img src=${'https://corteza.duvitra.com/api/compose' + a.url} alt="Popup Image" />
                         <p class="modal-caption"></p>
                     </div>
                 </div>
