@@ -105,25 +105,25 @@
       </div>
       <div class="form-right">
        
-        <form>
-           <h2 class="form-heading">Contact Form</h2>
+        <form id="contactForm">
+          <h2 class="form-heading">Contact Form</h2>
           <div class="input-group">
-            <input type="text" placeholder="Name" required />
-            <input type="tel" placeholder="Phone No" required />
+            <input type="text" id="name" placeholder="Name" />
+            <input type="tel" id="phone" placeholder="Phone No" />
           </div>
           <div class="input-group">
-            <input type="email" placeholder="Email" required />
-            <select required>
+            <input type="email" id="email" placeholder="Email" />
+            <select id="services">
               <option value="">Choose services</option>
-                      <option>Aluminium and Glass</option>
-                      <option>Doors and Windows</option>
-                      <option>Cladding Solution</option>
-                      <option>Frameless Structure</option>
-                      <option>Handrails and Balustrades</option>
-                      <option>Architectural Feature</option>
+              <option>Aluminium and Glass</option>
+              <option>Doors and Windows</option>
+              <option>Cladding Solution</option>
+              <option>Frameless Structure</option>
+              <option>Handrails and Balustrades</option>
+              <option>Architectural Feature</option>
             </select>
           </div>
-          <textarea placeholder="Your Message" rows="5" required></textarea>
+          <textarea id="message" placeholder="Your Message" rows="5"></textarea>
           <button class="submit-btn" type="submit">Submit</button>
         </form>
       </div>
@@ -180,5 +180,91 @@
     once: true,
   });
 </script>
+<script>
+  const getBearerToken = async ()=>{
+      var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+      };
+      await fetch("http://188.241.62.49:3000/api/token", requestOptions)
+      .then(response => response.text())
+      .then(result =>{
+          result = JSON.parse(result);
+          localStorage.setItem("token", result.access_token)
+      })
+      .catch(error => console.log('error', error));
+  }
+  getBearerToken();
+  document.getElementById("contactForm").addEventListener("submit", async (e)=> {
+    e.preventDefault(); // Prevent actual submission
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const services = document.getElementById("services").value;
+    const message = document.getElementById("message").value.trim();
+    console.log(name, phone)
+
+    const phoneRegex = /^[0-9]{10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (name === "") {
+      alert("Please enter your name");
+      return;
+    }
+
+    if (!phoneRegex.test(phone)) {
+      alert("Please enter a valid 10-digit phone number");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    if (services === "") {
+      alert("Please select a service");
+      return;
+    }
+
+    if (message === "") {
+      alert("Please enter your message");
+      return;
+    }
+
+    // All validations passed
+    const body = {
+      enquiry: {
+        "values":[
+          {"name":"name","value":name},
+          {"name":"PhoneNumber","value":phone},
+          {"name":"email","value":email},
+          {"name":"service","value":services},
+          {"name":"message","value":message},
+          {"name":"markAsRead","value":"0"}
+        ],
+        "records":[],
+        "meta":{}
+      },
+      moduleID: "453196980423032833",
+      namespaceID: "453196980392361985"
+    }
+    const response = await fetch("http://localhost:3000/api/enquiry", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+    
+    const data = await response.json();
+    alert("Form submitted successfully!");
+    // Optionally: this.submit(); if you want to proceed to actual form submission
+  });
+</script>
+
 </body>
 </html>
