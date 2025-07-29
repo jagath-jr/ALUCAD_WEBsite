@@ -186,7 +186,7 @@
           method: 'GET',
           redirect: 'follow'
       };
-      await fetch("http://188.241.62.49:3000/api/token", requestOptions)
+      await fetch("https://corteza.duvitra.com/connector/api/token", requestOptions)
       .then(response => response.text())
       .then(result =>{
           result = JSON.parse(result);
@@ -250,7 +250,7 @@
       moduleID: "453196980423032833",
       namespaceID: "453196980392361985"
     }
-    const response = await fetch("http://localhost:3000/api/enquiry", {
+    const response = await fetch("https://corteza.duvitra.com/connector/api/enquiry", {
         method: "POST",
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

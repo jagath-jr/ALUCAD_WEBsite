@@ -6,7 +6,7 @@ const getBearerToken = async ()=>{
         method: 'GET',
         redirect: 'follow'
     };
-    await fetch("http://188.241.62.49:3000/api/token", requestOptions)
+    await fetch("https://corteza.duvitra.com/connector/api/token", requestOptions)
     .then(response => response.text())
     .then(result =>{
         result = JSON.parse(result);
@@ -18,7 +18,7 @@ const getBearerToken = async ()=>{
 
 const getGalleryImages = async ()=>{
     try{
-        const response = await fetch("http://188.241.62.49:3000/api/gallery", {
+        const response = await fetch("https://corteza.duvitra.com/connector/api/gallery", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
